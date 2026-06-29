@@ -1,0 +1,313 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Construction — SDD Demo Walkthrough</title>
+  <link rel="stylesheet" href="../shared/walkthrough.css">
+</head>
+<body>
+<div class="wrap">
+  <nav class="nav">
+    <a href="../index.html" class="nav-brand">SDD Demo</a>
+    <a href="inception.html">Inception</a>
+    <a href="construction.html" class="active">Construction</a>
+    <a href="traceability.html">Traceability</a>
+    <a href="audit.html">Audit</a>
+    <a href="operations.html">Operations</a>
+    <a href="https://github.com/npozs77/sdd-task-board-demo/tree/main/src">Live App</a>
+    <a href="https://npozs77.github.io/sdd-aidev-toolkit" class="nav-external">Main Site →</a>
+  </nav>
+
+  <div class="breadcrumb"><a href="../index.html">Home</a> / Construction</div>
+
+  <div class="step-flow">
+    <a href="inception.html">1. Inception</a>
+    <span class="current">2. Construction</span>
+    <a href="traceability.html">3. Traceability</a>
+    <a href="audit.html">4. Audit</a>
+    <a href="operations.html">5. Operations</a>
+  </div>
+
+  <div class="page-header">
+    <h1>Construction Phase</h1>
+    <p class="subtitle">Each unit produces: functional design → code → tests → code summary. The functional design is a full specification with numbered pipeline steps, fail branches, TypeScript interfaces, and error matrices.</p>
+  </div>
+
+  <h2>What each unit produces</h2>
+
+  <h3>docs/construction/unit-N/</h3>
+  <table>
+    <tr><th>File</th><th>Content</th></tr>
+    <tr><td>functional-design/business-logic-model.md</td><td>Numbered workflow pipelines with [FAIL] branches, TypeScript interfaces, error tables, state transitions</td></tr>
+    <tr><td>nfr-requirements/nfr-requirements.md</td><td>Performance targets, reliability invariants, accessibility rules, testability criteria — categorized with IDs</td></tr>
+    <tr><td>code/summary.md</td><td>Requirement → code location mapping (traceability), public API summary</td></tr>
+  </table>
+
+  <h3>src/</h3>
+  <table>
+    <tr><th>File</th><th>Content</th></tr>
+    <tr><td>store.js</td><td>Data layer — CRUD, localStorage, event emitter, validation (~200 loc)</td></tr>
+    <tr><td>board.js</td><td>Render layer — DOM construction, ARIA, reactive re-render (~150 loc)</td></tr>
+    <tr><td>styles.css</td><td>All CSS — custom properties, responsive grid, a11y focus, modals (~280 loc)</td></tr>
+    <tr><td>controller.js</td><td>Interaction — drag/drop, keyboard nav, modals, event delegation (~250 loc)</td></tr>
+    <tr><td>app.js</td><td>Entry point — wires Store + Renderer + Controller (~30 loc)</td></tr>
+    <tr><td>index.html</td><td>Shell — loads CSS + app.js module</td></tr>
+  </table>
+
+  <h3>tests/</h3>
+  <table>
+    <tr><th>File</th><th>Content</th></tr>
+    <tr><td>store.test.js</td><td>25 unit tests organized by requirement ID (FR-2, BR-3, FR-3, BR-1, FR-5, FR-4, FR-6)</td></tr>
+    <tr><td>store.property.test.js</td><td>4 property-based tests: determinism, order integrity, persistence roundtrip, column constraint</td></tr>
+  </table>
+
+  <h2>Functional Design — excerpt (Unit 1: Data Store)</h2>
+  <p>Every operation is a numbered pipeline with explicit fail branches:</p>
+
+  <div class="artifact-card">
+    <h4>Workflow 1: Create Task</h4>
+    <div class="file-path">📄 docs/construction/unit-1-data-store/functional-design/business-logic-model.md</div>
+    <div class="content-preview">
+      <pre style="background:var(--bg);border:none;padding:0;font-size:0.78rem;line-height:1.5;"><code>title (string), description (string, optional)
+    │
+    ▼
+[1] Trim title string
+    │
+    ▼
+[2] Validate title is non-empty after trim
+    │        │
+    │     [FAIL] → throw Error("Title must not be empty")
+    │
+    ▼
+[3] Generate task ID via crypto.randomUUID()
+    │        │
+    │     [FALLBACK] → RFC 4122 v4 manual generation
+    │
+    ▼
+[4] Determine order value: count tasks where column === 'todo'
+    │
+    ▼
+[5] Construct Task object
+    │
+    ▼
+[6] Append to internal tasks array
+    │
+    ▼
+[7] Persist full state to localStorage
+    │        │
+    │     [FAIL] → console.warn, continue (graceful degradation)
+    │
+    ▼
+[8] Emit 'change' event to all subscribers
+    │
+    ▼
+Return: created Task object</code></pre>
+    </div>
+  </div>
+
+  <div class="artifact-card">
+    <h4>TypeScript interfaces — domain entities</h4>
+    <div class="file-path">📄 docs/construction/unit-1-data-store/functional-design/business-logic-model.md</div>
+    <div class="content-preview">
+      <pre style="background:var(--bg);border:none;padding:0;font-size:0.78rem;line-height:1.5;"><code>interface Task {
+  /** UUID v4, immutable after creation. [BR-2] */
+  id: string;
+
+  /** Non-empty after trim. [BR-3] */
+  title: string;
+
+  /** Any string including empty. Trimmed on save. */
+  description: string;
+
+  /** Must be one of VALID_COLUMNS. [BR-1] */
+  column: 'todo' | 'in-progress' | 'done';
+
+  /** 0-based position within column. Sequential, no gaps. [FR-6] */
+  order: number;
+}</code></pre>
+    </div>
+  </div>
+
+  <h2>Functional Design — excerpt (Unit 2: Board Renderer)</h2>
+
+  <div class="artifact-card">
+    <h4>Generated DOM Tree</h4>
+    <div class="file-path">📄 docs/construction/unit-2-board-renderer/functional-design/business-logic-model.md</div>
+    <div class="content-preview">
+      <pre style="background:var(--bg);border:none;padding:0;font-size:0.78rem;line-height:1.4;"><code>div.board [role="region", aria-label="Task Board"]
+├── section.column.column--todo [data-column="todo", aria-label="To Do"]
+│   ├── h2.column-header → "To Do (3)"
+│   ├── div.column-tasks [role="list"]
+│   │   ├── article.task-card [data-task-id, role="listitem", draggable, tabindex="0"]
+│   │   │   ├── h3.task-title
+│   │   │   ├── p.task-description (optional)
+│   │   │   └── div.task-actions
+│   │   │       ├── button [data-action="edit"]
+│   │   │       └── button.btn-delete [data-action="delete"]
+│   │   └── ...
+│   ├── div.drop-zone [aria-hidden="true"]
+│   └── button.btn-add-task (todo only)
+├── section.column.column--in-progress [...]
+└── section.column.column--done [...]</code></pre>
+    </div>
+  </div>
+
+  <div class="artifact-card">
+    <h4>Performance analysis</h4>
+    <div class="file-path">📄 docs/construction/unit-2-board-renderer/functional-design/business-logic-model.md</div>
+    <div class="content-preview">
+      <table style="font-size:0.8rem;">
+        <tr><th style="padding:4px 8px;">Board size</th><th style="padding:4px 8px;">Render time</th><th style="padding:4px 8px;">Reflows</th></tr>
+        <tr><td style="padding:4px 8px;">5 tasks (default)</td><td style="padding:4px 8px;">< 1ms</td><td style="padding:4px 8px;">1</td></tr>
+        <tr><td style="padding:4px 8px;">20 tasks</td><td style="padding:4px 8px;">< 2ms</td><td style="padding:4px 8px;">1</td></tr>
+        <tr><td style="padding:4px 8px;">50 tasks</td><td style="padding:4px 8px;">< 5ms</td><td style="padding:4px 8px;">1</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <h2>Functional Design — excerpt (Unit 3: Controller)</h2>
+
+  <div class="artifact-card">
+    <h4>Drag & Drop pipeline</h4>
+    <div class="file-path">📄 docs/construction/unit-3-controller/functional-design/business-logic-model.md</div>
+    <div class="content-preview">
+      <pre style="background:var(--bg);border:none;padding:0;font-size:0.78rem;line-height:1.5;"><code>User releases mouse on .column
+    │
+    ▼
+[4] _onDrop(event):
+    │   e.preventDefault()
+    │   Find closest .column
+    │        │
+    │     [FAIL: no column OR no draggedTaskId] → return
+    │
+    │   Calculate drop position:
+    │     cards = column.querySelectorAll('.task-card:not(.dragging)')
+    │     FOR i = 0 to cards.length - 1:
+    │       midpoint = rect.top + rect.height / 2
+    │       IF event.clientY < midpoint:
+    │         position = i; BREAK
+    │
+    │   Call store.moveTask(this._draggedTaskId, targetColumn, position)
+    │        │
+    │     [FAIL: store throws] → console.warn, continue
+    │
+    │   Call _cleanup()</code></pre>
+    </div>
+  </div>
+
+  <div class="artifact-card">
+    <h4>Event delegation — why</h4>
+    <div class="file-path">📄 docs/construction/unit-3-controller/functional-design/business-logic-model.md</div>
+    <div class="content-preview">
+      <table style="font-size:0.8rem;">
+        <tr><th style="padding:4px 8px;">Concern</th><th style="padding:4px 8px;">Per-card binding</th><th style="padding:4px 8px;">Delegation</th></tr>
+        <tr><td style="padding:4px 8px;">Re-render survives</td><td style="padding:4px 8px;">❌ Must rebind</td><td style="padding:4px 8px;">✅ Root persists</td></tr>
+        <tr><td style="padding:4px 8px;">Memory (50 cards)</td><td style="padding:4px 8px;">350 listeners</td><td style="padding:4px 8px;">7 listeners</td></tr>
+        <tr><td style="padding:4px 8px;">Dynamic elements</td><td style="padding:4px 8px;">Manual binding</td><td style="padding:4px 8px;">Natural</td></tr>
+        <tr><td style="padding:4px 8px;">Cleanup on destroy</td><td style="padding:4px 8px;">Track all</td><td style="padding:4px 8px;">Remove 7</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <h2>Code with requirement tracing — excerpt</h2>
+
+  <div class="artifact-card">
+    <h4>Module header — store.js</h4>
+    <div class="file-path">📄 src/store.js</div>
+    <div class="content-preview">
+      <pre style="background:var(--bg);border:none;padding:0;font-size:0.78rem;line-height:1.4;"><code>/**
+ * Data Store — Task Board State Management
+ *
+ * Requirements covered:
+ * - FR-1: Board structure (VALID_COLUMNS)
+ * - FR-2: Task management (createTask, editTask)
+ * - FR-5: Data persistence (_load, _save)
+ * - FR-6: Task ordering (reorderTask, _normalizeOrder)
+ * - BR-1: Fixed columns (VALID_COLUMNS validation)
+ * - BR-2: UUID identity (generateId)
+ * - BR-3: Required title (validation in create/edit)
+ * - BR-4: Sample data (createSampleData)
+ * - BR-6: Persistence timing (_save in every mutation)
+ */</code></pre>
+    </div>
+  </div>
+
+  <div class="artifact-card">
+    <h4>Method-level tracing</h4>
+    <div class="file-path">📄 src/store.js, src/controller.js</div>
+    <div class="content-preview">
+      <pre style="background:var(--bg);border:none;padding:0;font-size:0.78rem;line-height:1.4;"><code>/** Move a task to a different column. [FR-3: Task Movement] [BR-1: Fixed Columns] */
+moveTask(id, targetColumn, position) { ... }
+
+/** Persist current state to localStorage. [BR-6: Save on every mutation] */
+_save() { ... }
+
+// ─── Drag & Drop [FR-3: Task Movement] ───
+// ─── Keyboard Navigation [NFR-2: Accessibility] ───</code></pre>
+    </div>
+  </div>
+
+  <h2>Tests — excerpts</h2>
+
+  <div class="artifact-card">
+    <h4>Unit tests organized by requirement</h4>
+    <div class="file-path">📄 tests/store.test.js</div>
+    <div class="content-preview">
+      <pre style="background:var(--bg);border:none;padding:0;font-size:0.78rem;line-height:1.4;"><code>describe('title validation [BR-3]', () => {
+  it('rejects empty string title', () => {
+    expect(() => store.createTask('')).toThrow('Title must not be empty');
+  });
+  it('rejects whitespace-only title', () => {
+    expect(() => store.createTask('   ')).toThrow('Title must not be empty');
+  });
+  it('accepts title "0" (string-empty, not falsy)', () => {
+    expect(store.createTask('0').title).toBe('0');
+  });
+});</code></pre>
+    </div>
+  </div>
+
+  <div class="artifact-card">
+    <h4>Property-based tests — invariants</h4>
+    <div class="file-path">📄 tests/store.property.test.js</div>
+    <div class="content-preview">
+      <pre style="background:var(--bg);border:none;padding:0;font-size:0.78rem;line-height:1.4;"><code>it('P2: orders within any column are always sequential', () => {
+  fc.assert(fc.property(
+    fc.array(fc.record({
+      action: fc.constantFrom('create', 'move', 'delete', 'reorder'),
+      ...
+    }), { maxLength: 30 }),
+    (operations) => {
+      // Apply random operations...
+      // INVARIANT: orders are 0, 1, 2, ... (no gaps)
+      for (const col of ['todo', 'in-progress', 'done']) {
+        const orders = store.getTasks(col).map(t => t.order);
+        expect(orders).toEqual(orders.map((_, i) => i));
+      }
+    }
+  ), { numRuns: 100 });
+});</code></pre>
+    </div>
+  </div>
+
+  <h2>Construction results</h2>
+  <table>
+    <tr><th>Unit</th><th>Source</th><th>Tests</th><th>Functional Design</th></tr>
+    <tr><td>1. Data Store</td><td>store.js (~200 loc)</td><td>25 unit + 4 PBT</td><td>6 workflow pipelines, 350 lines</td></tr>
+    <tr><td>2. Board Renderer</td><td>board.js + styles.css + index.html (~455 loc)</td><td>—</td><td>4 workflow pipelines, 300 lines</td></tr>
+    <tr><td>3. Controller + Entry</td><td>controller.js + app.js (~280 loc)</td><td>—</td><td>8 workflow pipelines, 350 lines</td></tr>
+    <tr><td colspan="4"><strong>Total: ~710 loc source, ~1000 lines functional design, 29 test cases</strong></td></tr>
+  </table>
+
+  <h2>Full specs</h2>
+  <p>Functional designs: <a href="https://github.com/npozs77/sdd-task-board-demo/tree/main/docs/construction">docs/construction/ on GitHub →</a></p>
+  <p>Source code: <a href="https://github.com/npozs77/sdd-task-board-demo/tree/main/src">src/ on GitHub →</a></p>
+  <p>Tests: <a href="https://github.com/npozs77/sdd-task-board-demo/tree/main/tests">tests/ on GitHub →</a></p>
+
+  <p style="margin-top:24px;">Next: <a href="traceability.html">Traceability — requirement → code mapping →</a></p>
+
+  <footer class="page-footer"><p>Built with <a href="https://npozs77.github.io/sdd-aidev-toolkit">SDD Toolkit</a></p></footer>
+</div>
+</body>
+</html>

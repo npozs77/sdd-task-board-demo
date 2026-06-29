@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Audit Trail — SDD Demo Walkthrough</title>
+  <link rel="stylesheet" href="../shared/walkthrough.css">
+</head>
+<body>
+<div class="wrap">
+  <nav class="nav">
+    <a href="../index.html" class="nav-brand">SDD Demo</a>
+    <a href="inception.html">Inception</a>
+    <a href="construction.html">Construction</a>
+    <a href="traceability.html">Traceability</a>
+    <a href="audit.html" class="active">Audit</a>
+    <a href="operations.html">Operations</a>
+    <a href="https://github.com/npozs77/sdd-task-board-demo/tree/main/src">Live App</a>
+    <a href="https://npozs77.github.io/sdd-aidev-toolkit" class="nav-external">Main Site →</a>
+  </nav>
+
+  <div class="breadcrumb"><a href="../index.html">Home</a> / Audit Trail</div>
+
+  <div class="step-flow">
+    <a href="inception.html">1. Inception</a>
+    <a href="construction.html">2. Construction</a>
+    <a href="traceability.html">3. Traceability</a>
+    <span class="current">4. Audit</span>
+    <a href="operations.html">5. Operations</a>
+  </div>
+
+  <div class="page-header">
+    <h1>Audit Trail</h1>
+    <p class="subtitle">Every gate approval and phase transition recorded with timestamp and evidence.</p>
+  </div>
+
+  <h2>What this stage produces</h2>
+  <table>
+    <tr><th>Artifact</th><th>Content</th></tr>
+    <tr><td>audit.md</td><td>Timestamped decision log: gate approvals, phase transitions, evidence</td></tr>
+    <tr><td>state.md</td><td>Current project phase and stage progress checklist</td></tr>
+  </table>
+
+  <h2>Decision audit — this project's timeline</h2>
+
+  <div class="timeline">
+    <div class="timeline-entry">
+      <div class="date">2026-06-29 — Gate 3</div>
+      <div class="event">Inception Complete</div>
+      <div class="detail">7 FRs + 6 NFRs + 6 BRs defined. Architecture decided. 3 units decomposed with traceability matrix. All requirements assigned to units.</div>
+    </div>
+
+    <div class="timeline-entry">
+      <div class="date">2026-06-29 — Gate 4</div>
+      <div class="event">Unit 1 Design Approved</div>
+      <div class="detail">Functional design reviewed: TaskStore operations with pre/postconditions, error tables, persistence layer, graceful degradation matrix.</div>
+    </div>
+
+    <div class="timeline-entry">
+      <div class="date">2026-06-29 — Gate 5</div>
+      <div class="event">Unit 1 Complete</div>
+      <div class="detail">store.js delivered (~200 loc). Code summary confirms FR-1,2,5,6 + BR-1–6 traced to implementations. Tests pass.</div>
+    </div>
+
+    <div class="timeline-entry">
+      <div class="date">2026-06-29 — Gate 5</div>
+      <div class="event">Unit 2 Complete</div>
+      <div class="detail">board.js + styles.css + index.html (~455 loc). Accessibility verified: ARIA roles, focus indicators, semantic HTML, heading hierarchy.</div>
+    </div>
+
+    <div class="timeline-entry">
+      <div class="date">2026-06-29 — Gate 5</div>
+      <div class="event">Unit 3 Complete</div>
+      <div class="detail">controller.js + app.js (~280 loc). Drag-and-drop, keyboard navigation, modals, event delegation. All FRs covered.</div>
+    </div>
+
+    <div class="timeline-entry">
+      <div class="date">2026-06-29 — Gate 6</div>
+      <div class="event">Construction Complete</div>
+      <div class="detail">3 units, 6 source files, ~710 loc. 19/19 requirements traced. Zero external dependencies. App functional in browser. Tests pass.</div>
+    </div>
+  </div>
+
+  <h2>Full specs</h2>
+  <p>Audit trail: <a href="https://github.com/npozs77/sdd-task-board-demo/blob/main/docs/audit.md">docs/audit.md on GitHub →</a></p>
+
+  <p style="margin-top:24px;">Next: <a href="operations.html">Operations — user guide + developer guide →</a></p>
+
+  <footer class="page-footer"><p>Built with <a href="https://npozs77.github.io/sdd-aidev-toolkit">SDD Toolkit</a></p></footer>
+</div>
+</body>
+</html>

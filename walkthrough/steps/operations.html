@@ -1,0 +1,130 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Operations — SDD Demo Walkthrough</title>
+  <link rel="stylesheet" href="../shared/walkthrough.css">
+</head>
+<body>
+<div class="wrap">
+  <nav class="nav">
+    <a href="../index.html" class="nav-brand">SDD Demo</a>
+    <a href="inception.html">Inception</a>
+    <a href="construction.html">Construction</a>
+    <a href="traceability.html">Traceability</a>
+    <a href="audit.html">Audit</a>
+    <a href="operations.html" class="active">Operations</a>
+    <a href="https://github.com/npozs77/sdd-task-board-demo/tree/main/src">Live App</a>
+    <a href="https://npozs77.github.io/sdd-aidev-toolkit" class="nav-external">Main Site →</a>
+  </nav>
+
+  <div class="breadcrumb"><a href="../index.html">Home</a> / Operations</div>
+
+  <div class="step-flow">
+    <a href="inception.html">1. Inception</a>
+    <a href="construction.html">2. Construction</a>
+    <a href="traceability.html">3. Traceability</a>
+    <a href="audit.html">4. Audit</a>
+    <span class="current">5. Operations</span>
+  </div>
+
+  <div class="page-header">
+    <h1>Operations Phase</h1>
+    <p class="subtitle">Deployment-ready documentation produced by the methodology: user-facing and developer-facing guides.</p>
+  </div>
+
+  <h2>What this stage produces</h2>
+  <table>
+    <tr><th>Artifact</th><th>Content</th></tr>
+    <tr><td>user-guide.md</td><td>Feature walkthroughs, keyboard reference, data/privacy, troubleshooting</td></tr>
+    <tr><td>developer-guide.md</td><td>Architecture, module API reference, extension guides, CSS customization, debugging</td></tr>
+  </table>
+
+  <h2>User Guide — excerpt</h2>
+
+  <div class="artifact-card">
+    <h4>Keyboard Reference</h4>
+    <div class="file-path">📄 docs/operations/user-guide.md</div>
+    <div class="content-preview">
+      <table style="font-size:0.8rem;">
+        <tr><th style="padding:4px 8px;">Key</th><th style="padding:4px 8px;">Action</th></tr>
+        <tr><td style="padding:4px 8px;">Tab / Shift+Tab</td><td style="padding:4px 8px;">Navigate between cards</td></tr>
+        <tr><td style="padding:4px 8px;">Enter</td><td style="padding:4px 8px;">Edit focused task</td></tr>
+        <tr><td style="padding:4px 8px;">Delete / Backspace</td><td style="padding:4px 8px;">Delete focused task</td></tr>
+        <tr><td style="padding:4px 8px;">Ctrl+Arrow Left/Right</td><td style="padding:4px 8px;">Move task between columns</td></tr>
+        <tr><td style="padding:4px 8px;">Ctrl+Arrow Up/Down</td><td style="padding:4px 8px;">Reorder within column</td></tr>
+        <tr><td style="padding:4px 8px;">Escape</td><td style="padding:4px 8px;">Close any open modal</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="artifact-card">
+    <h4>Troubleshooting</h4>
+    <div class="file-path">📄 docs/operations/user-guide.md</div>
+    <div class="content-preview">
+      <table style="font-size:0.8rem;">
+        <tr><th style="padding:4px 8px;">Problem</th><th style="padding:4px 8px;">Solution</th></tr>
+        <tr><td style="padding:4px 8px;">Board empty on load</td><td style="padding:4px 8px;">Clear localStorage to restore sample data</td></tr>
+        <tr><td style="padding:4px 8px;">Drag doesn't work</td><td style="padding:4px 8px;">Drag card body, not the Edit/Delete buttons</td></tr>
+        <tr><td style="padding:4px 8px;">Changes don't persist</td><td style="padding:4px 8px;">Check if browser is in private/incognito mode</td></tr>
+        <tr><td style="padding:4px 8px;">Page is blank</td><td style="padding:4px 8px;">Serve via HTTP (ES modules need it)</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <h2>Developer Guide — excerpt</h2>
+
+  <div class="artifact-card">
+    <h4>Module API — TaskStore</h4>
+    <div class="file-path">📄 docs/operations/developer-guide.md</div>
+    <div class="content-preview">
+      <table style="font-size:0.8rem;">
+        <tr><th style="padding:4px 8px;">Method</th><th style="padding:4px 8px;">Signature</th><th style="padding:4px 8px;">Description</th></tr>
+        <tr><td style="padding:4px 8px;"><code>createTask</code></td><td style="padding:4px 8px;"><code>(title, desc?) → Task</code></td><td style="padding:4px 8px;">Add to "todo"</td></tr>
+        <tr><td style="padding:4px 8px;"><code>editTask</code></td><td style="padding:4px 8px;"><code>(id, {title?, desc?})</code></td><td style="padding:4px 8px;">Update fields</td></tr>
+        <tr><td style="padding:4px 8px;"><code>moveTask</code></td><td style="padding:4px 8px;"><code>(id, col, pos?)</code></td><td style="padding:4px 8px;">Move to column</td></tr>
+        <tr><td style="padding:4px 8px;"><code>deleteTask</code></td><td style="padding:4px 8px;"><code>(id)</code></td><td style="padding:4px 8px;">Remove permanently</td></tr>
+        <tr><td style="padding:4px 8px;"><code>reorderTask</code></td><td style="padding:4px 8px;"><code>(id, pos)</code></td><td style="padding:4px 8px;">Reorder in column</td></tr>
+        <tr><td style="padding:4px 8px;"><code>on / off</code></td><td style="padding:4px 8px;"><code>(event, fn)</code></td><td style="padding:4px 8px;">Subscribe/unsubscribe</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="artifact-card">
+    <h4>Extension guide — adding a new column</h4>
+    <div class="file-path">📄 docs/operations/developer-guide.md</div>
+    <div class="content-preview">
+      <ol style="font-size:0.85rem;margin-left:20px;">
+        <li><code>store.js</code>: Add to <code>VALID_COLUMNS</code></li>
+        <li><code>board.js</code>: Add to <code>COLUMNS</code> with display name + CSS class</li>
+        <li><code>styles.css</code>: Add <code>.column--{id}</code>, update grid</li>
+        <li><code>controller.js</code>: Update keyboard nav column array</li>
+      </ol>
+    </div>
+  </div>
+
+  <div class="artifact-card">
+    <h4>Debugging — console access</h4>
+    <div class="file-path">📄 docs/operations/developer-guide.md</div>
+    <div class="content-preview">
+      <pre style="background:var(--bg);border:none;padding:0;font-size:0.8rem;line-height:1.4;"><code>// Create a task from console
+__taskBoard.store.createTask('Test', 'From console');
+
+// View state
+console.table(__taskBoard.store.getState());
+
+// Reset
+localStorage.removeItem('sdd-task-board-state');
+location.reload();</code></pre>
+    </div>
+  </div>
+
+  <h2>Full specs</h2>
+  <p>User Guide: <a href="https://github.com/npozs77/sdd-task-board-demo/blob/main/docs/operations/user-guide.md">docs/operations/user-guide.md →</a></p>
+  <p>Developer Guide: <a href="https://github.com/npozs77/sdd-task-board-demo/blob/main/docs/operations/developer-guide.md">docs/operations/developer-guide.md →</a></p>
+
+  <footer class="page-footer"><p>Built with <a href="https://npozs77.github.io/sdd-aidev-toolkit">SDD Toolkit</a></p></footer>
+</div>
+</body>
+</html>

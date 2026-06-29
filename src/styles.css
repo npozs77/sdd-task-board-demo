@@ -1,0 +1,366 @@
+/**
+ * Task Board Styles
+ * Requirements: NFR-2 (Accessibility), NFR-3 (Responsive)
+ *
+ * Design: Dark theme with accent colors per column.
+ * Layout: CSS Grid, responsive breakpoints at 640px and 960px.
+ */
+
+/* ─── Custom Properties ─── */
+:root {
+  --bg: #0d1117;
+  --surface: #161b22;
+  --surface-2: #21262d;
+  --border: #30363d;
+  --text: #e6edf3;
+  --text-muted: #8b949e;
+  --accent: #58a6ff;
+  --accent-todo: #79c0ff;
+  --accent-progress: #d2a8ff;
+  --accent-done: #7ee787;
+  --danger: #f85149;
+  --radius: 8px;
+  --radius-lg: 12px;
+  --shadow: 0 2px 8px rgba(0, 0, 0, 0.3);
+  --focus-ring: 0 0 0 2px var(--accent);
+  --transition: 150ms ease;
+}
+
+/* ─── Reset ─── */
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* ─── Base ─── */
+html {
+  font-size: 16px;
+  line-height: 1.5;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+}
+
+/* ─── Focus Indicators (NFR-2) ─── */
+:focus-visible {
+  outline: none;
+  box-shadow: var(--focus-ring);
+  border-radius: var(--radius);
+}
+
+/* ─── Header ─── */
+.app-header {
+  text-align: center;
+  padding: 24px 16px 16px;
+}
+
+.app-header h1 {
+  font-size: 1.8rem;
+  color: var(--accent);
+  letter-spacing: -0.02em;
+}
+
+.app-subtitle {
+  color: var(--text-muted);
+  font-size: 0.9rem;
+  margin-top: 4px;
+}
+
+/* ─── Board Layout ─── */
+.board {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 16px;
+  padding: 16px 24px;
+  flex: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+}
+
+/* ─── Column ─── */
+.column {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  min-height: 200px;
+}
+
+.column-header {
+  font-size: 1rem;
+  font-weight: 600;
+  margin-bottom: 12px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.column--todo .column-header { color: var(--accent-todo); }
+.column--in-progress .column-header { color: var(--accent-progress); }
+.column--done .column-header { color: var(--accent-done); }
+
+.count {
+  font-size: 0.8rem;
+  font-weight: 400;
+  color: var(--text-muted);
+}
+
+.column-tasks {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.column-empty {
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  text-align: center;
+  padding: 24px 8px;
+  font-style: italic;
+}
+
+/* ─── Task Card ─── */
+.task-card {
+  background: var(--surface-2);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 12px;
+  cursor: grab;
+  transition: border-color var(--transition), transform var(--transition), opacity var(--transition);
+}
+
+.task-card:hover {
+  border-color: var(--accent);
+}
+
+.task-card.dragging {
+  opacity: 0.5;
+  transform: rotate(2deg);
+}
+
+.task-card.drag-over {
+  border-color: var(--accent);
+  box-shadow: var(--shadow);
+}
+
+.task-title {
+  font-size: 0.9rem;
+  font-weight: 500;
+  margin-bottom: 4px;
+}
+
+.task-description {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+.task-description:empty {
+  display: none;
+}
+
+/* ─── Task Actions ─── */
+.task-actions {
+  display: flex;
+  gap: 6px;
+  opacity: 0;
+  transition: opacity var(--transition);
+}
+
+.task-card:hover .task-actions,
+.task-card:focus-within .task-actions {
+  opacity: 1;
+}
+
+.task-actions button {
+  font-size: 0.75rem;
+  padding: 4px 8px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  background: var(--surface);
+  color: var(--text-muted);
+  cursor: pointer;
+  transition: color var(--transition), border-color var(--transition);
+}
+
+.task-actions button:hover {
+  color: var(--text);
+  border-color: var(--text-muted);
+}
+
+.task-actions .btn-delete:hover {
+  color: var(--danger);
+  border-color: var(--danger);
+}
+
+/* ─── Drop Zone ─── */
+.drop-zone {
+  border: 2px dashed var(--border);
+  border-radius: var(--radius);
+  padding: 12px;
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  margin-top: 8px;
+  opacity: 0;
+  transition: opacity var(--transition);
+}
+
+.column.drag-active .drop-zone {
+  opacity: 1;
+}
+
+/* ─── Add Task Button ─── */
+.btn-add-task {
+  width: 100%;
+  padding: 8px;
+  margin-top: 8px;
+  border: 1px dashed var(--border);
+  border-radius: var(--radius);
+  background: transparent;
+  color: var(--text-muted);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: color var(--transition), border-color var(--transition);
+}
+
+.btn-add-task:hover {
+  color: var(--accent);
+  border-color: var(--accent);
+}
+
+/* ─── Modal/Dialog ─── */
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  width: 90%;
+  max-width: 400px;
+  box-shadow: var(--shadow);
+}
+
+.modal h2 {
+  font-size: 1.1rem;
+  margin-bottom: 16px;
+}
+
+.modal input,
+.modal textarea {
+  width: 100%;
+  padding: 8px 12px;
+  margin-bottom: 12px;
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  background: var(--bg);
+  color: var(--text);
+  font-size: 0.9rem;
+  font-family: inherit;
+}
+
+.modal textarea {
+  resize: vertical;
+  min-height: 80px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 8px;
+}
+
+.modal-actions button {
+  padding: 8px 16px;
+  border-radius: var(--radius);
+  border: 1px solid var(--border);
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: background var(--transition);
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: var(--bg);
+  border-color: var(--accent);
+}
+
+.btn-primary:hover {
+  background: #79b8ff;
+}
+
+.btn-secondary {
+  background: var(--surface-2);
+  color: var(--text);
+}
+
+.btn-secondary:hover {
+  background: var(--border);
+}
+
+/* ─── Footer ─── */
+.app-footer {
+  text-align: center;
+  padding: 16px;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+
+.app-footer a {
+  color: var(--accent);
+  text-decoration: none;
+}
+
+.app-footer a:hover {
+  text-decoration: underline;
+}
+
+/* ─── Responsive (NFR-3) ─── */
+@media (max-width: 959px) {
+  .board {
+    gap: 12px;
+    padding: 12px 16px;
+  }
+
+  .column {
+    padding: 12px;
+  }
+}
+
+@media (max-width: 639px) {
+  .board {
+    grid-template-columns: 1fr;
+    gap: 16px;
+    padding: 12px;
+  }
+
+  .column {
+    min-height: auto;
+  }
+
+  .task-actions {
+    opacity: 1;
+  }
+}

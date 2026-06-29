@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>SDD Toolkit Demo — Walkthrough</title>
+  <link rel="stylesheet" href="shared/walkthrough.css">
+</head>
+<body>
+<div class="wrap">
+  <nav class="nav">
+    <a href="index.html" class="nav-brand">SDD Demo</a>
+    <a href="steps/inception.html">Inception</a>
+    <a href="steps/construction.html">Construction</a>
+    <a href="steps/traceability.html">Traceability</a>
+    <a href="steps/audit.html">Audit</a>
+    <a href="steps/operations.html">Operations</a>
+    <a href="https://github.com/npozs77/sdd-task-board-demo/tree/main/src">Live App</a>
+    <a href="https://npozs77.github.io/sdd-aidev-toolkit" class="nav-external">Main Site →</a>
+  </nav>
+
+  <div class="page-header" style="text-align:center; padding: 32px 0 16px;">
+    <p style="display:inline-block; background:var(--surface-2); border:1px solid var(--border); color:var(--green); border-radius:100px; padding:4px 14px; font-size:0.8rem; margin-bottom:14px;">Spec-Driven Development</p>
+    <h1>Task Board — Built with SDD</h1>
+    <p class="subtitle">A real app built through the full SDD lifecycle. Browse the process, inspect the artifacts, try the result.</p>
+  </div>
+
+  <h2>What this demo contains</h2>
+  <p class="context-note">This is a deliberately simple app (task board, ~710 lines, zero dependencies). The point is not the app's complexity — it's the methodology's output. SDD scales the same way for apps 100x this size.</p>
+  <table>
+    <tr><th>Layer</th><th>Content</th></tr>
+    <tr><td>project-profile.yaml</td><td>SDD configuration — defines project goals, stack, maturity. Used by <code>sdd init</code> to activate the right programs.</td></tr>
+    <tr><td>Live App</td><td>Functional Kanban board — drag tasks, keyboard nav, localStorage persistence</td></tr>
+    <tr><td>Inception Artifacts</td><td>12 docs: requirements, business rules, verification Q&A, personas, stories, HLD, components, dependencies, plans</td></tr>
+    <tr><td>Construction Artifacts</td><td>9 docs: per-unit functional design + NFR requirements + code summary</td></tr>
+    <tr><td>Operations Artifacts</td><td>3 docs: user guide, developer guide, architecture</td></tr>
+    <tr><td>Tests</td><td>25 unit tests + 4 property-based tests (organized by requirement ID)</td></tr>
+    <tr><td>Audit Trail</td><td>Timestamped gate approvals and phase transitions with evidence</td></tr>
+  </table>
+
+  <h2>Explore the process</h2>
+
+  <div class="step-flow">
+    <a href="steps/inception.html">1. Inception</a>
+    <a href="steps/construction.html">2. Construction</a>
+    <a href="steps/traceability.html">3. Traceability</a>
+    <a href="steps/audit.html">4. Audit</a>
+    <a href="steps/operations.html">5. Operations</a>
+  </div>
+
+  <p>Or <a href="https://github.com/npozs77/sdd-task-board-demo/tree/main/src">try the app</a> — then come back to see how every feature traces to a requirement.</p>
+
+  <h2>The numbers</h2>
+  <table>
+    <tr><th>Metric</th><th>Value</th></tr>
+    <tr><td>Functional Requirements</td><td>7 (with acceptance criteria + edge cases)</td></tr>
+    <tr><td>Non-Functional Requirements</td><td>6 (with metrics + verification evidence)</td></tr>
+    <tr><td>Business Rules</td><td>6 (with validation tables + interaction matrix)</td></tr>
+    <tr><td>User Stories</td><td>10 across 4 epics (with acceptance criteria)</td></tr>
+    <tr><td>Personas</td><td>3</td></tr>
+    <tr><td>Architecture Decisions (ADR)</td><td>7 (with alternatives + rationale)</td></tr>
+    <tr><td>Inception Artifacts</td><td>12 documents</td></tr>
+    <tr><td>Construction Artifacts</td><td>9 documents (3 per unit: design + NFR + code summary)</td></tr>
+    <tr><td>Operations Artifacts</td><td>3 (user guide + dev guide + architecture)</td></tr>
+    <tr><td>Total Documentation</td><td>26 markdown files</td></tr>
+    <tr><td>Source Files</td><td>6 (~710 lines of code)</td></tr>
+    <tr><td>Test Files</td><td>2 (25 unit tests + 4 property-based tests)</td></tr>
+    <tr><td>Requirement Traceability</td><td>19/19 (100% — bidirectional)</td></tr>
+    <tr><td>External Dependencies</td><td>0 (dev deps only: vitest + fast-check)</td></tr>
+  </table>
+
+  <h2>Full repository</h2>
+  <p>Browse all source and artifacts: <a href="https://github.com/npozs77/sdd-task-board-demo">github.com/TODO/sdd-task-board →</a></p>
+
+  <footer class="page-footer">
+    <p>Built with <a href="https://npozs77.github.io/sdd-aidev-toolkit">SDD Toolkit</a> — Spec-Driven Development for AI-assisted engineering.</p>
+  </footer>
+</div>
+</body>
+</html>

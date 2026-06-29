@@ -1,0 +1,341 @@
+/**
+ * Walkthrough Site Styles
+ * Matches the main SDD Toolkit site (Tailwind slate palette + purple/cyan accents).
+ */
+
+:root {
+  --bg: #0f172a;
+  --surface: #1e293b;
+  --surface-2: #334155;
+  --border: #475569;
+  --border-subtle: #334155;
+  --text: #cbd5e1;
+  --text-muted: #94a3b8;
+  --text-white: #f1f5f9;
+  --accent-purple: #c084fc;
+  --accent-cyan: #22d3ee;
+  --accent-gradient: linear-gradient(to right, #a855f7, #22d3ee);
+  --green: #4ade80;
+  --orange: #fb923c;
+  --blue: #60a5fa;
+  --danger: #f87171;
+  --radius: 8px;
+  --radius-lg: 12px;
+}
+
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+.wrap {
+  max-width: 900px;
+  margin: 0 auto;
+  padding: 0 24px 40px;
+}
+
+/* ─── Navigation ─── */
+.nav {
+  display: flex;
+  align-items: center;
+  gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border-subtle);
+  margin-bottom: 32px;
+  flex-wrap: wrap;
+}
+
+.nav-brand {
+  font-weight: 700;
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  text-decoration: none;
+  font-size: 1rem;
+  margin-right: auto;
+}
+
+.nav a {
+  color: var(--text-muted);
+  text-decoration: none;
+  font-size: 0.85rem;
+  padding: 4px 10px;
+  border-radius: 6px;
+  transition: color 150ms, background 150ms;
+}
+
+.nav a:hover, .nav a.active {
+  color: var(--text-white);
+  background: var(--surface-2);
+}
+
+.nav-external {
+  color: var(--accent-cyan) !important;
+  border: 1px solid var(--border-subtle);
+}
+
+.nav-external:hover {
+  background: var(--accent-cyan) !important;
+  color: var(--bg) !important;
+  -webkit-text-fill-color: var(--bg) !important;
+  border-color: var(--accent-cyan) !important;
+}
+
+/* ─── Breadcrumb ─── */
+.breadcrumb {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: 24px;
+}
+
+.breadcrumb a {
+  color: var(--text-muted);
+  text-decoration: none;
+}
+
+.breadcrumb a:hover {
+  color: var(--text-white);
+}
+
+/* ─── Page Header ─── */
+.page-header {
+  margin-bottom: 32px;
+}
+
+.page-header h1 {
+  font-size: 2rem;
+  font-weight: 700;
+  background: var(--accent-gradient);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  letter-spacing: -0.02em;
+  margin-bottom: 8px;
+}
+
+.page-header .subtitle {
+  color: var(--text);
+  font-size: 1rem;
+}
+
+/* ─── Content ─── */
+h2 {
+  font-size: 1.3rem;
+  color: var(--text-white);
+  margin: 32px 0 12px;
+  padding-bottom: 8px;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+h3 {
+  font-size: 1.05rem;
+  color: var(--accent-cyan);
+  margin: 20px 0 8px;
+}
+
+p {
+  margin-bottom: 12px;
+  color: var(--text);
+}
+
+a {
+  color: var(--accent-cyan);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+}
+
+/* ─── Artifact Cards ─── */
+.artifact-card {
+  background: var(--surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius-lg);
+  padding: 16px 20px;
+  margin: 12px 0;
+}
+
+.artifact-card h4 {
+  color: var(--green);
+  font-size: 0.95rem;
+  margin-bottom: 6px;
+}
+
+.artifact-card .file-path {
+  font-family: monospace;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: 8px;
+}
+
+.artifact-card .content-preview {
+  font-size: 0.85rem;
+  color: var(--text);
+}
+
+/* ─── Code Blocks ─── */
+pre {
+  background: var(--surface);
+  border: 1px solid var(--border-subtle);
+  border-radius: var(--radius);
+  padding: 16px;
+  overflow-x: auto;
+  margin: 12px 0;
+}
+
+code {
+  font-family: 'SF Mono', 'Fira Code', monospace;
+  font-size: 0.85rem;
+  color: var(--accent-cyan);
+}
+
+pre code {
+  color: var(--text);
+}
+
+/* ─── Tables ─── */
+table {
+  width: 100%;
+  border-collapse: collapse;
+  margin: 12px 0;
+  font-size: 0.9rem;
+}
+
+th, td {
+  padding: 8px 12px;
+  text-align: left;
+  border-bottom: 1px solid var(--border-subtle);
+}
+
+th {
+  color: var(--text-muted);
+  font-weight: 600;
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+/* ─── Step Indicator ─── */
+.step-flow {
+  display: flex;
+  gap: 4px;
+  margin: 24px 0;
+  flex-wrap: wrap;
+}
+
+.step-flow a, .step-flow span {
+  display: inline-block;
+  padding: 6px 14px;
+  border-radius: 100px;
+  font-size: 0.8rem;
+  text-decoration: none;
+  border: 1px solid var(--border-subtle);
+  color: var(--text-muted);
+}
+
+.step-flow a:hover {
+  border-color: var(--accent-cyan);
+  color: var(--text-white);
+  text-decoration: none;
+}
+
+.step-flow .current {
+  background: var(--accent-gradient);
+  color: var(--bg);
+  border-color: transparent;
+  font-weight: 600;
+  -webkit-text-fill-color: var(--bg);
+}
+
+/* ─── Traceability Table ─── */
+.trace-table td:first-child {
+  color: var(--orange);
+  font-family: monospace;
+  font-size: 0.85rem;
+}
+
+.trace-table td:last-child {
+  font-family: monospace;
+  font-size: 0.8rem;
+  color: var(--text-muted);
+}
+
+/* ─── Timeline (Audit) ─── */
+.timeline {
+  border-left: 2px solid var(--border-subtle);
+  padding-left: 20px;
+  margin: 16px 0;
+}
+
+.timeline-entry {
+  margin-bottom: 20px;
+  position: relative;
+}
+
+.timeline-entry::before {
+  content: '';
+  position: absolute;
+  left: -25px;
+  top: 6px;
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background: var(--accent-gradient);
+  border: 2px solid var(--bg);
+}
+
+.timeline-entry .date {
+  font-size: 0.8rem;
+  color: var(--text-muted);
+  margin-bottom: 4px;
+}
+
+.timeline-entry .event {
+  font-weight: 600;
+  color: var(--text-white);
+  margin-bottom: 4px;
+}
+
+.timeline-entry .detail {
+  font-size: 0.85rem;
+  color: var(--text);
+}
+
+/* ─── Footer ─── */
+.page-footer {
+  margin-top: 48px;
+  padding-top: 16px;
+  border-top: 1px solid var(--border-subtle);
+  text-align: center;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+}
+
+.page-footer a {
+  color: var(--accent-cyan);
+  text-decoration: none;
+}
+
+/* ─── Context pill ─── */
+.context-note {
+  display: inline-block;
+  background: var(--surface);
+  border: 1px solid var(--border-subtle);
+  color: var(--text-muted);
+  border-radius: 6px;
+  padding: 8px 14px;
+  font-size: 0.82rem;
+  margin-bottom: 20px;
+}

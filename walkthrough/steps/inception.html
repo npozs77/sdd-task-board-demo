@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Inception — SDD Demo Walkthrough</title>
+  <link rel="stylesheet" href="../shared/walkthrough.css">
+</head>
+<body>
+<div class="wrap">
+  <nav class="nav">
+    <a href="../index.html" class="nav-brand">SDD Demo</a>
+    <a href="inception.html" class="active">Inception</a>
+    <a href="construction.html">Construction</a>
+    <a href="traceability.html">Traceability</a>
+    <a href="audit.html">Audit</a>
+    <a href="operations.html">Operations</a>
+    <a href="https://github.com/npozs77/sdd-task-board-demo/tree/main/src">Live App</a>
+    <a href="https://npozs77.github.io/sdd-aidev-toolkit" class="nav-external">Main Site →</a>
+  </nav>
+
+  <div class="breadcrumb"><a href="../index.html">Home</a> / Inception</div>
+
+  <div class="step-flow">
+    <span class="current">1. Inception</span>
+    <a href="construction.html">2. Construction</a>
+    <a href="traceability.html">3. Traceability</a>
+    <a href="audit.html">4. Audit</a>
+    <a href="operations.html">5. Operations</a>
+  </div>
+
+  <div class="page-header">
+    <h1>Inception Phase</h1>
+    <p class="subtitle">Requirements gathering, architecture decisions, and unit decomposition — all completed before any code is written.</p>
+  </div>
+
+  <h2>What this stage produces</h2>
+
+  <h3>requirements/</h3>
+  <table>
+    <tr><th>File</th><th>Content</th></tr>
+    <tr><td>requirements.md</td><td>FR/NFR specs with acceptance criteria, edge cases, validation rules</td></tr>
+    <tr><td>business-rules.md</td><td>Domain constraints with enforcement points, validation tables, interaction matrix</td></tr>
+    <tr><td>requirement-verification-questions.md</td><td>Structured Q&A that drove all architectural decisions</td></tr>
+  </table>
+
+  <h3>user-stories/</h3>
+  <table>
+    <tr><th>File</th><th>Content</th></tr>
+    <tr><td>personas.md</td><td>3 personas with goals, frustrations, usage context</td></tr>
+    <tr><td>stories.md</td><td>4 epics, 10 user stories with acceptance criteria, story→requirement mapping</td></tr>
+  </table>
+
+  <h3>application-design/</h3>
+  <table>
+    <tr><th>File</th><th>Content</th></tr>
+    <tr><td>high-level-design.md</td><td>Architecture diagrams, 7 ADRs, data flow, security, scalability</td></tr>
+    <tr><td>components.md</td><td>4 components with responsibilities, interfaces, design rules</td></tr>
+    <tr><td>component-dependency.md</td><td>Import graph, runtime flow, dependency matrix, build order</td></tr>
+    <tr><td>unit-of-work.md</td><td>3 units with dependency ordering and traceability matrix</td></tr>
+  </table>
+
+  <h3>plans/</h3>
+  <table>
+    <tr><th>File</th><th>Content</th></tr>
+    <tr><td>execution-plan.md</td><td>Build/test/deploy strategy, construction sequence, risk register</td></tr>
+    <tr><td>implementation-plan.md</td><td>Tech decisions, test strategy, packaging, file inventory</td></tr>
+  </table>
+
+  <h2>Functional Requirements — excerpt</h2>
+  <p>Each requirement includes acceptance criteria, step-by-step behaviour, and edge cases:</p>
+
+  <div class="artifact-card">
+    <h4>FR-3: Task Movement Between Columns</h4>
+    <div class="file-path">📄 docs/inception/requirements/requirements.md</div>
+    <div class="content-preview">
+      <p><strong>Drag-and-drop flow:</strong></p>
+      <ol style="margin-left: 20px; margin-bottom: 12px; font-size: 0.85rem;">
+        <li>User initiates drag on a task card</li>
+        <li>Visual feedback: source card becomes semi-transparent, cursor changes</li>
+        <li>Target column highlights to indicate valid drop zone</li>
+        <li>User drops the card on a target column</li>
+        <li>Task moves to target column at the drop position</li>
+        <li>State is persisted immediately</li>
+      </ol>
+      <p><strong>Drop position calculation:</strong></p>
+      <ul style="margin-left: 20px; margin-bottom: 12px; font-size: 0.85rem;">
+        <li>Dropped above existing card → inserts before that card</li>
+        <li>Dropped below all cards → appends to end</li>
+        <li>Dropped on same column → reorder (FR-6)</li>
+      </ul>
+      <p><strong>Constraints:</strong> One task at a time. No drag from action buttons.</p>
+    </div>
+  </div>
+
+  <h2>Non-Functional Requirements — excerpt</h2>
+  <p>Specific metrics and verification evidence, not vague aspirations:</p>
+
+  <div class="artifact-card">
+    <h4>NFR-2: Accessibility (WCAG 2.1 AA)</h4>
+    <div class="file-path">📄 docs/inception/requirements/requirements.md</div>
+    <div class="content-preview">
+      <p><strong>Keyboard bindings:</strong></p>
+      <table style="font-size: 0.8rem; margin-bottom: 12px;">
+        <tr><td style="color:var(--orange); padding: 4px 8px;">Tab</td><td style="padding: 4px 8px;">Focus between cards</td></tr>
+        <tr><td style="color:var(--orange); padding: 4px 8px;">Enter</td><td style="padding: 4px 8px;">Edit focused card</td></tr>
+        <tr><td style="color:var(--orange); padding: 4px 8px;">Ctrl+Arrow L/R</td><td style="padding: 4px 8px;">Move to adjacent column</td></tr>
+        <tr><td style="color:var(--orange); padding: 4px 8px;">Ctrl+Arrow U/D</td><td style="padding: 4px 8px;">Reorder within column</td></tr>
+        <tr><td style="color:var(--orange); padding: 4px 8px;">Escape</td><td style="padding: 4px 8px;">Close modal</td></tr>
+      </table>
+      <p><strong>Contrast (verified):</strong> Body 13.5:1, Muted 5.2:1, Accent 5.8:1 — all exceed 4.5:1</p>
+    </div>
+  </div>
+
+  <h2>Business Rules — excerpt</h2>
+  <p>Each rule specifies enforcement points, valid/invalid inputs, and edge cases:</p>
+
+  <div class="artifact-card">
+    <h4>BR-3: Required Title Field</h4>
+    <div class="file-path">📄 docs/inception/requirements/business-rules.md</div>
+    <div class="content-preview">
+      <p><strong>Validation:</strong> <code>input → trim() → reject if empty</code></p>
+      <table style="font-size: 0.8rem; margin: 12px 0;">
+        <tr><th style="padding: 4px 8px;">Input</th><th style="padding: 4px 8px;">Valid?</th><th style="padding: 4px 8px;">Why</th></tr>
+        <tr><td style="padding: 4px 8px;"><code>"Buy milk"</code></td><td style="padding: 4px 8px;">✅</td><td style="padding: 4px 8px;">Non-empty after trim</td></tr>
+        <tr><td style="padding: 4px 8px;"><code>"  padded  "</code></td><td style="padding: 4px 8px;">✅</td><td style="padding: 4px 8px;">Trimmed to "padded"</td></tr>
+        <tr><td style="padding: 4px 8px;"><code>""</code></td><td style="padding: 4px 8px;">❌</td><td style="padding: 4px 8px;">Empty string</td></tr>
+        <tr><td style="padding: 4px 8px;"><code>"   "</code></td><td style="padding: 4px 8px;">❌</td><td style="padding: 4px 8px;">Whitespace only</td></tr>
+        <tr><td style="padding: 4px 8px;"><code>"0"</code></td><td style="padding: 4px 8px;">✅</td><td style="padding: 4px 8px;">Not empty (string check, not falsy)</td></tr>
+      </table>
+      <p><strong>Enforcement:</strong> <code>store.createTask()</code>, <code>store.editTask()</code>, UI modal red border</p>
+    </div>
+  </div>
+
+  <h2>High-Level Design — excerpt</h2>
+
+  <div class="artifact-card">
+    <h4>Architecture Decision Record</h4>
+    <div class="file-path">📄 docs/inception/requirements/requirements.md — HLD section</div>
+    <div class="content-preview">
+      <table style="font-size: 0.8rem;">
+        <tr><th style="padding: 4px 8px;">Decision</th><th style="padding: 4px 8px;">Choice</th><th style="padding: 4px 8px;">Alternatives</th><th style="padding: 4px 8px;">Rationale</th></tr>
+        <tr><td style="padding: 4px 8px;">Language</td><td style="padding: 4px 8px;">Vanilla JS</td><td style="padding: 4px 8px;">TypeScript, React, Svelte</td><td style="padding: 4px 8px;">Zero deps (NFR-1)</td></tr>
+        <tr><td style="padding: 4px 8px;">State</td><td style="padding: 4px 8px;">Event-emitting class</td><td style="padding: 4px 8px;">Redux-like, signals</td><td style="padding: 4px 8px;">Simplest reactive pattern</td></tr>
+        <tr><td style="padding: 4px 8px;">Rendering</td><td style="padding: 4px 8px;">Direct DOM</td><td style="padding: 4px 8px;">Virtual DOM</td><td style="padding: 4px 8px;">No framework overhead</td></tr>
+        <tr><td style="padding: 4px 8px;">Drag & Drop</td><td style="padding: 4px 8px;">HTML5 DnD API</td><td style="padding: 4px 8px;">SortableJS</td><td style="padding: 4px 8px;">Native, zero deps</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <div class="artifact-card">
+    <h4>Data Flow</h4>
+    <div class="file-path">📄 docs/inception/requirements/requirements.md — HLD section</div>
+    <div class="content-preview">
+      <pre style="background:var(--bg);border:none;padding:0;font-size:0.8rem;"><code>User → Controller → Store → localStorage
+                        ↓ emit 'change'
+                    Renderer → DOM</code></pre>
+    </div>
+  </div>
+
+  <h2>Unit Decomposition — excerpt</h2>
+
+  <div class="artifact-card">
+    <h4>3 Units — Build Order</h4>
+    <div class="file-path">📄 docs/inception/application-design/unit-of-work.md</div>
+    <div class="content-preview">
+      <pre style="background:var(--bg);border:none;padding:0;font-size:0.8rem;margin-bottom:12px;"><code>Unit 1 (Data Store) → Unit 2 (Board Renderer) → Unit 3 (Controller + Entry)</code></pre>
+      <table style="font-size: 0.8rem;">
+        <tr><th style="padding:4px 8px;">Requirement</th><th style="padding:4px 8px;">Unit</th></tr>
+        <tr><td style="padding:4px 8px;">FR-1,2,5,6 + BR-1–6</td><td style="padding:4px 8px;">Unit 1</td></tr>
+        <tr><td style="padding:4px 8px;">FR-1,7 + NFR-2,3</td><td style="padding:4px 8px;">Unit 2</td></tr>
+        <tr><td style="padding:4px 8px;">FR-3,4,6,7 + NFR-2,4 + BR-3,5</td><td style="padding:4px 8px;">Unit 3</td></tr>
+      </table>
+    </div>
+  </div>
+
+  <h2>Full specs</h2>
+  <p>Browse all 11 inception artifacts: <a href="https://github.com/npozs77/sdd-task-board-demo/tree/main/docs/inception">docs/inception/ on GitHub →</a></p>
+
+  <p style="margin-top:24px;">Next: <a href="construction.html">Construction — functional designs and code →</a></p>
+
+  <footer class="page-footer"><p>Built with <a href="https://npozs77.github.io/sdd-aidev-toolkit">SDD Toolkit</a></p></footer>
+</div>
+</body>
+</html>

@@ -1,0 +1,17 @@
+{
+  "name": "sdd-task-board",
+  "version": "1.0.0",
+  "description": "Kanban task board built with Spec-Driven Development — demo project",
+  "type": "module",
+  "scripts": {
+    "test": "vitest --run",
+    "test:watch": "vitest",
+    "serve": "npx serve src",
+    "serve:walkthrough": "npx serve walkthrough"
+  },
+  "devDependencies": {
+    "vitest": "^3.2.0",
+    "fast-check": "^4.0.0"
+  },
+  "license": "MIT"
+}

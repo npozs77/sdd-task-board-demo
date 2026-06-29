@@ -1,0 +1,129 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Traceability — SDD Demo Walkthrough</title>
+  <link rel="stylesheet" href="../shared/walkthrough.css">
+</head>
+<body>
+<div class="wrap">
+  <nav class="nav">
+    <a href="../index.html" class="nav-brand">SDD Demo</a>
+    <a href="inception.html">Inception</a>
+    <a href="construction.html">Construction</a>
+    <a href="traceability.html" class="active">Traceability</a>
+    <a href="audit.html">Audit</a>
+    <a href="operations.html">Operations</a>
+    <a href="https://github.com/npozs77/sdd-task-board-demo/tree/main/src">Live App</a>
+    <a href="https://npozs77.github.io/sdd-aidev-toolkit" class="nav-external">Main Site →</a>
+  </nav>
+
+  <div class="breadcrumb"><a href="../index.html">Home</a> / Traceability</div>
+
+  <div class="step-flow">
+    <a href="inception.html">1. Inception</a>
+    <a href="construction.html">2. Construction</a>
+    <span class="current">3. Traceability</span>
+    <a href="audit.html">4. Audit</a>
+    <a href="operations.html">5. Operations</a>
+  </div>
+
+  <div class="page-header">
+    <h1>Requirement Traceability</h1>
+    <p class="subtitle">Bidirectional mapping between requirements and code. Every requirement has an implementation location. Every module declares which requirements it satisfies.</p>
+  </div>
+
+  <h2>What traceability produces</h2>
+  <table>
+    <tr><th>Artifact</th><th>Content</th></tr>
+    <tr><td>code/summary.md (per unit)</td><td>Requirement ID → file, function, line mapping</td></tr>
+    <tr><td>Module headers (JSDoc)</td><td>List of requirement IDs covered by this file</td></tr>
+    <tr><td>Method comments</td><td>Specific [FR-X] [BR-X] tags on each function</td></tr>
+    <tr><td>Test describe blocks</td><td>Requirement ID in test group name</td></tr>
+  </table>
+
+  <h2>Forward: Requirement → Code</h2>
+  <p>"Where is this requirement implemented?"</p>
+
+  <table class="trace-table">
+    <tr><th>Requirement</th><th>Implementation</th></tr>
+    <tr><td>FR-1 Board Structure</td><td><code>store.js: VALID_COLUMNS</code> · <code>board.js: COLUMNS, _renderColumn()</code></td></tr>
+    <tr><td>FR-2 Task Management</td><td><code>store.js: createTask(), editTask()</code></td></tr>
+    <tr><td>FR-3 Task Movement</td><td><code>controller.js: _onDragStart(), _onDragOver(), _onDrop()</code></td></tr>
+    <tr><td>FR-4 Task Editing</td><td><code>controller.js: _showEditModal(), _showDeleteConfirm()</code></td></tr>
+    <tr><td>FR-5 Data Persistence</td><td><code>store.js: _load(), _save(), STORAGE_KEY</code></td></tr>
+    <tr><td>FR-6 Task Ordering</td><td><code>store.js: reorderTask()</code> · <code>controller.js: Ctrl+Arrow</code></td></tr>
+    <tr><td>FR-7 Visual Feedback</td><td><code>styles.css: .dragging, .drag-over</code> · <code>controller.js: _cleanup()</code></td></tr>
+  </table>
+
+  <table class="trace-table">
+    <tr><th>Requirement</th><th>Implementation</th></tr>
+    <tr><td>NFR-1 Zero Dependencies</td><td>No package.json, no imports from node_modules</td></tr>
+    <tr><td>NFR-2 Accessibility</td><td><code>board.js: role, aria-label, tabindex</code> · <code>controller.js: keyboard nav</code> · <code>styles.css: :focus-visible</code></td></tr>
+    <tr><td>NFR-3 Responsive</td><td><code>styles.css: CSS Grid + @media 640px, 960px</code></td></tr>
+    <tr><td>NFR-4 Performance</td><td><code>board.js: DocumentFragment</code> · <code>controller.js: event delegation</code></td></tr>
+    <tr><td>NFR-5 Browser Support</td><td>ES2020+ APIs only, no polyfills</td></tr>
+    <tr><td>NFR-6 Code Quality</td><td>JSDoc all exports, ≤50 loc/function, meaningful names</td></tr>
+  </table>
+
+  <table class="trace-table">
+    <tr><th>Rule</th><th>Implementation</th></tr>
+    <tr><td>BR-1 Fixed Columns</td><td><code>store.js: VALID_COLUMNS + moveTask() validation</code></td></tr>
+    <tr><td>BR-2 UUID Identity</td><td><code>store.js: generateId() → crypto.randomUUID()</code></td></tr>
+    <tr><td>BR-3 Required Title</td><td><code>store.js: trim + throw</code> · <code>controller.js: modal red border</code></td></tr>
+    <tr><td>BR-4 Sample Data</td><td><code>store.js: createSampleData()</code></td></tr>
+    <tr><td>BR-5 Delete Confirm</td><td><code>controller.js: _showDeleteConfirm() alertdialog</code></td></tr>
+    <tr><td>BR-6 Save on Change</td><td><code>store.js: _save() in every mutation method</code></td></tr>
+  </table>
+
+  <h2>Backward: Code → Requirement</h2>
+  <p>"Why does this code exist? What breaks if I remove it?"</p>
+
+  <div class="artifact-card">
+    <h4>Example: _normalizeOrder()</h4>
+    <div class="content-preview">
+      <p><strong>Function:</strong> <code>store.js: _normalizeOrder(column)</code></p>
+      <p><strong>Traces to:</strong> FR-6 (Task Ordering) — ensures sequential order values after moves/deletes</p>
+      <p><strong>If removed:</strong> Order gaps accumulate → position insertion math breaks → tasks appear in wrong order</p>
+    </div>
+  </div>
+
+  <div class="artifact-card">
+    <h4>Example: event delegation pattern</h4>
+    <div class="content-preview">
+      <p><strong>Pattern:</strong> <code>controller.js: single click listener on root</code></p>
+      <p><strong>Traces to:</strong> NFR-4 (Performance) — event delegation survives re-renders without rebinding</p>
+      <p><strong>If changed to per-card:</strong> Must rebind on every render → performance degrades at scale, risk of memory leaks</p>
+    </div>
+  </div>
+
+  <h2>Traceability in tests</h2>
+  <p>Test suites reference the requirement they verify:</p>
+
+  <div class="artifact-card">
+    <h4>Test → Requirement mapping</h4>
+    <div class="file-path">📄 tests/store.test.js</div>
+    <div class="content-preview">
+      <pre style="background:var(--bg);border:none;padding:0;font-size:0.8rem;line-height:1.4;"><code>describe('createTask [FR-2]', () => { ... });
+describe('title validation [BR-3]', () => { ... });
+describe('moveTask [FR-3]', () => { ... });
+describe('column validation [BR-1]', () => { ... });
+describe('persistence [FR-5, BR-6]', () => { ... });
+describe('deleteTask [FR-4]', () => { ... });
+describe('reorderTask [FR-6]', () => { ... });</code></pre>
+    </div>
+  </div>
+
+  <h2>Coverage: 19/19 requirements traced</h2>
+  <p>Every functional requirement, non-functional requirement, and business rule has at least one code location and at least one test case. No orphan requirements. No undocumented code.</p>
+
+  <h2>Full specs</h2>
+  <p>Code summaries: <a href="https://github.com/npozs77/sdd-task-board-demo/tree/main/docs/construction">docs/construction/unit-*/code/summary.md on GitHub →</a></p>
+
+  <p style="margin-top:24px;">Next: <a href="audit.html">Audit Trail — decision history →</a></p>
+
+  <footer class="page-footer"><p>Built with <a href="https://npozs77.github.io/sdd-aidev-toolkit">SDD Toolkit</a></p></footer>
+</div>
+</body>
+</html>
