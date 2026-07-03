@@ -32,7 +32,7 @@ npm test
 │   ├── construction/     # Per-unit functional designs, NFR specs, code summaries
 │   ├── operations/       # User guide, developer guide, architecture
 │   ├── state.md          # Project progress tracker
-│   └── audit.md          # Decision audit trail
+│   └── audit.log # Decision audit trail (JSONL)
 ├── walkthrough/          # Static HTML walkthrough site
 ├── project-profile.yaml  # SDD configuration
 └── package.json          # Dev dependencies (test runner only)

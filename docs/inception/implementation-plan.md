@@ -69,7 +69,7 @@ sdd-task-board/
 │   ├── construction/       # Per-unit functional designs + code summaries
 │   ├── operations/         # User guide + developer guide
 │   ├── state.md            # Project progress tracker
-│   └── audit.md            # Decision audit trail
+│   └── audit.log # Decision audit trail (JSONL)
 ├── walkthrough/            # Static HTML walkthrough site
 └── project-profile.yaml    # SDD configuration
 ```
