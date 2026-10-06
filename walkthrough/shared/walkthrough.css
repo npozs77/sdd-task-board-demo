@@ -48,10 +48,9 @@ body {
 .nav {
   display: flex;
   align-items: center;
-  gap: 16px;
-  padding: 16px 0;
+  gap: 4px;
+  padding: 12px 0;
   border-bottom: 1px solid var(--border-subtle);
-  margin-bottom: 32px;
   flex-wrap: wrap;
 }
 
@@ -69,27 +68,96 @@ body {
 .nav a {
   color: var(--text-muted);
   text-decoration: none;
-  font-size: 0.85rem;
-  padding: 4px 10px;
-  border-radius: 6px;
+  font-size: 0.82rem;
+  padding: 8px 16px;
+  border-radius: 100px;
   transition: color 150ms, background 150ms;
 }
 
-.nav a:hover, .nav a.active {
+.nav a:hover {
   color: var(--text-white);
   background: var(--surface-2);
 }
 
+.nav a.active {
+  background: var(--accent-gradient);
+  color: #0f172a;
+  -webkit-text-fill-color: #0f172a;
+  font-weight: 600;
+}
+
 .nav-external {
   color: var(--accent-cyan) !important;
-  border: 1px solid var(--border-subtle);
+  -webkit-text-fill-color: var(--accent-cyan) !important;
+  border: 1px solid var(--border-subtle) !important;
 }
 
 .nav-external:hover {
   background: var(--accent-cyan) !important;
-  color: var(--bg) !important;
-  -webkit-text-fill-color: var(--bg) !important;
+  color: #0f172a !important;
+  -webkit-text-fill-color: #0f172a !important;
   border-color: var(--accent-cyan) !important;
+}
+
+/* ─── Step Sub-Nav (Chevron Flow) ─── */
+.step-nav {
+  display: flex;
+  width: 100%;
+  margin-bottom: 32px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border-subtle);
+  gap: 0;
+  overflow: hidden;
+}
+
+.step-nav a,
+.step-nav span.current {
+  flex: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 12px 20px 12px 28px;
+  font-size: 0.8rem;
+  text-decoration: none;
+  color: var(--text-muted);
+  background: var(--surface);
+  clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 50%, calc(100% - 14px) 100%, 0 100%, 14px 50%);
+  margin-left: -6px;
+  transition: background 150ms, color 150ms;
+  white-space: nowrap;
+}
+
+.step-nav a:first-child,
+.step-nav span.current:first-child {
+  margin-left: 0;
+  clip-path: polygon(0 0, calc(100% - 14px) 0, 100% 50%, calc(100% - 14px) 100%, 0 100%);
+  border-radius: 6px 0 0 6px;
+  padding-left: 16px;
+}
+
+.step-nav a:last-child,
+.step-nav span.current:last-child {
+  clip-path: polygon(0 0, 100% 0, 100% 100%, 0 100%, 14px 50%);
+  border-radius: 0 6px 6px 0;
+  padding-right: 16px;
+}
+
+.step-nav a:hover {
+  background: var(--surface-2);
+  color: var(--text-white);
+  text-decoration: none;
+}
+
+.step-nav span.current {
+  background: var(--accent-gradient);
+  color: #0f172a;
+  -webkit-text-fill-color: #0f172a;
+  font-weight: 600;
+}
+
+/* Hide the separate arrow spans */
+.step-nav .step-arrow {
+  display: none;
 }
 
 /* ─── Breadcrumb ─── */
@@ -227,37 +295,7 @@ th {
   letter-spacing: 0.05em;
 }
 
-/* ─── Step Indicator ─── */
-.step-flow {
-  display: flex;
-  gap: 4px;
-  margin: 24px 0;
-  flex-wrap: wrap;
-}
-
-.step-flow a, .step-flow span {
-  display: inline-block;
-  padding: 6px 14px;
-  border-radius: 100px;
-  font-size: 0.8rem;
-  text-decoration: none;
-  border: 1px solid var(--border-subtle);
-  color: var(--text-muted);
-}
-
-.step-flow a:hover {
-  border-color: var(--accent-cyan);
-  color: var(--text-white);
-  text-decoration: none;
-}
-
-.step-flow .current {
-  background: var(--accent-gradient);
-  color: var(--bg);
-  border-color: transparent;
-  font-weight: 600;
-  -webkit-text-fill-color: var(--bg);
-}
+/* ─── Step Indicator (legacy, unused) ─── */
 
 /* ─── Traceability Table ─── */
 .trace-table td:first-child {

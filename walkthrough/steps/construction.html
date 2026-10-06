@@ -15,23 +15,25 @@
     <a href="traceability.html">Traceability</a>
     <a href="audit.html">Audit</a>
     <a href="operations.html">Operations</a>
-    <a href="https://github.com/npozs77/sdd-task-board-demo/tree/main/src">Live App</a>
+    <a href="https://npozs77.github.io/sdd-task-board-demo/">Live App</a>
     <a href="https://npozs77.github.io/sdd-aidev-toolkit" class="nav-external">Main Site →</a>
   </nav>
 
-  <div class="breadcrumb"><a href="../index.html">Home</a> / Construction</div>
-
-  <div class="step-flow">
+  <div class="step-nav">
     <a href="inception.html">1. Inception</a>
+    <span class="step-arrow">→</span>
     <span class="current">2. Construction</span>
+    <span class="step-arrow">→</span>
     <a href="traceability.html">3. Traceability</a>
+    <span class="step-arrow">→</span>
     <a href="audit.html">4. Audit</a>
+    <span class="step-arrow">→</span>
     <a href="operations.html">5. Operations</a>
   </div>
 
   <div class="page-header">
     <h1>Construction Phase</h1>
-    <p class="subtitle">Each unit produces: functional design → code → tests → code summary. The functional design is a full specification with numbered pipeline steps, fail branches, TypeScript interfaces, and error matrices.</p>
+    <p class="subtitle">The functional design is a contract between human and AI. If the code doesn't match the design, that's a defect — not a matter of opinion. This is what makes AI-generated code reviewable.</p>
   </div>
 
   <h2>What each unit produces</h2>
@@ -39,9 +41,9 @@
   <h3>docs/construction/unit-N/</h3>
   <table>
     <tr><th>File</th><th>Content</th></tr>
-    <tr><td>functional-design/business-logic-model.md</td><td>Numbered workflow pipelines with [FAIL] branches, TypeScript interfaces, error tables, state transitions</td></tr>
-    <tr><td>nfr-requirements/nfr-requirements.md</td><td>Performance targets, reliability invariants, accessibility rules, testability criteria — categorized with IDs</td></tr>
-    <tr><td>code/summary.md</td><td>Requirement → code location mapping (traceability), public API summary</td></tr>
+    <tr><td>business-logic-model.md</td><td>Numbered workflow pipelines with [FAIL] branches, TypeScript interfaces, error tables, state transitions</td></tr>
+    <tr><td>nfr-requirements.md</td><td>Performance targets, reliability invariants, accessibility rules, testability criteria — categorized with IDs</td></tr>
+    <tr><td>summary.md</td><td>Requirement → code location mapping (traceability), public API summary</td></tr>
   </table>
 
   <h3>src/</h3>
@@ -67,7 +69,7 @@
 
   <div class="artifact-card">
     <h4>Workflow 1: Create Task</h4>
-    <div class="file-path">📄 docs/construction/unit-1-data-store/functional-design/business-logic-model.md</div>
+    <div class="file-path">📄 docs/construction/unit-1-data-store/business-logic-model.md</div>
     <div class="content-preview">
       <pre style="background:var(--bg);border:none;padding:0;font-size:0.78rem;line-height:1.5;"><code>title (string), description (string, optional)
     │
@@ -108,7 +110,7 @@ Return: created Task object</code></pre>
 
   <div class="artifact-card">
     <h4>TypeScript interfaces — domain entities</h4>
-    <div class="file-path">📄 docs/construction/unit-1-data-store/functional-design/business-logic-model.md</div>
+    <div class="file-path">📄 docs/construction/unit-1-data-store/business-logic-model.md</div>
     <div class="content-preview">
       <pre style="background:var(--bg);border:none;padding:0;font-size:0.78rem;line-height:1.5;"><code>interface Task {
   /** UUID v4, immutable after creation. [BR-2] */
@@ -133,7 +135,7 @@ Return: created Task object</code></pre>
 
   <div class="artifact-card">
     <h4>Generated DOM Tree</h4>
-    <div class="file-path">📄 docs/construction/unit-2-board-renderer/functional-design/business-logic-model.md</div>
+    <div class="file-path">📄 docs/construction/unit-2-board-renderer/business-logic-model.md</div>
     <div class="content-preview">
       <pre style="background:var(--bg);border:none;padding:0;font-size:0.78rem;line-height:1.4;"><code>div.board [role="region", aria-label="Task Board"]
 ├── section.column.column--todo [data-column="todo", aria-label="To Do"]
@@ -155,7 +157,7 @@ Return: created Task object</code></pre>
 
   <div class="artifact-card">
     <h4>Performance analysis</h4>
-    <div class="file-path">📄 docs/construction/unit-2-board-renderer/functional-design/business-logic-model.md</div>
+    <div class="file-path">📄 docs/construction/unit-2-board-renderer/business-logic-model.md</div>
     <div class="content-preview">
       <table style="font-size:0.8rem;">
         <tr><th style="padding:4px 8px;">Board size</th><th style="padding:4px 8px;">Render time</th><th style="padding:4px 8px;">Reflows</th></tr>
@@ -170,7 +172,7 @@ Return: created Task object</code></pre>
 
   <div class="artifact-card">
     <h4>Drag & Drop pipeline</h4>
-    <div class="file-path">📄 docs/construction/unit-3-controller/functional-design/business-logic-model.md</div>
+    <div class="file-path">📄 docs/construction/unit-3-controller/business-logic-model.md</div>
     <div class="content-preview">
       <pre style="background:var(--bg);border:none;padding:0;font-size:0.78rem;line-height:1.5;"><code>User releases mouse on .column
     │
@@ -198,7 +200,7 @@ Return: created Task object</code></pre>
 
   <div class="artifact-card">
     <h4>Event delegation — why</h4>
-    <div class="file-path">📄 docs/construction/unit-3-controller/functional-design/business-logic-model.md</div>
+    <div class="file-path">📄 docs/construction/unit-3-controller/business-logic-model.md</div>
     <div class="content-preview">
       <table style="font-size:0.8rem;">
         <tr><th style="padding:4px 8px;">Concern</th><th style="padding:4px 8px;">Per-card binding</th><th style="padding:4px 8px;">Delegation</th></tr>

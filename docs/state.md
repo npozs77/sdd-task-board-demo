@@ -1,11 +1,13 @@
 # Project State — SDD Task Board
 
+## Current Stage
+CONSTRUCTION COMPLETE
+
 ## Project Information
 - **Name**: sdd-task-board
 - **Type**: Greenfield
 - **Maturity Level**: MVP
 - **Start Date**: 2026-06-29
-- **Current Stage**: CONSTRUCTION COMPLETE
 
 ## Stage Progress
 
