@@ -1,6 +1,8 @@
 # SDD Task Board
 
 > **[View the live demo & walkthrough →](https://npozs77.github.io/sdd-aidev-toolkit/demo/)**
+>
+> **[Try the live app →](https://npozs77.github.io/sdd-task-board-demo/)**
 
 A Kanban-style task board built using [Spec-Driven Development](https://npozs77.github.io/sdd-aidev-toolkit) at MVP maturity.
 
@@ -32,7 +34,7 @@ npm test
 │   ├── construction/     # Per-unit functional designs, NFR specs, code summaries
 │   ├── operations/       # User guide, developer guide, architecture
 │   ├── state.md          # Project progress tracker
-│   └── audit.log # Decision audit trail (JSONL)
+│   └── audit.log          # Decision audit trail (JSONL)
 ├── walkthrough/          # Static HTML walkthrough site
 ├── project-profile.yaml  # SDD configuration
 └── package.json          # Dev dependencies (test runner only)

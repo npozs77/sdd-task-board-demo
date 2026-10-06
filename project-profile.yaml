@@ -1,20 +1,13 @@
 # SDD Project Profile — Task Board Demo
 # This file documents the SDD configuration used to build this app.
 
-schemaVersion: "1.0"
-project:
-  name: sdd-task-board
-  description: A Kanban-style task board built using SDD methodology at MVP maturity
-  type: greenfield
-  maturity: mvp
+name: sdd-task-board
+type: greenfield
+maturity: mvp
 
 stack:
-  language: javascript
-  runtime: browser
-  framework: none
-  persistence: localStorage
+  language: typescript
 
 goals:
   - build
-  - demonstrate-sdd-process
-  - showcase-traceability
+  - quality

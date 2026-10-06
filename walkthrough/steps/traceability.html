@@ -15,29 +15,31 @@
     <a href="traceability.html" class="active">Traceability</a>
     <a href="audit.html">Audit</a>
     <a href="operations.html">Operations</a>
-    <a href="https://github.com/npozs77/sdd-task-board-demo/tree/main/src">Live App</a>
+    <a href="https://npozs77.github.io/sdd-task-board-demo/">Live App</a>
     <a href="https://npozs77.github.io/sdd-aidev-toolkit" class="nav-external">Main Site →</a>
   </nav>
 
-  <div class="breadcrumb"><a href="../index.html">Home</a> / Traceability</div>
-
-  <div class="step-flow">
+  <div class="step-nav">
     <a href="inception.html">1. Inception</a>
+    <span class="step-arrow">→</span>
     <a href="construction.html">2. Construction</a>
+    <span class="step-arrow">→</span>
     <span class="current">3. Traceability</span>
+    <span class="step-arrow">→</span>
     <a href="audit.html">4. Audit</a>
+    <span class="step-arrow">→</span>
     <a href="operations.html">5. Operations</a>
   </div>
 
   <div class="page-header">
     <h1>Requirement Traceability</h1>
-    <p class="subtitle">Bidirectional mapping between requirements and code. Every requirement has an implementation location. Every module declares which requirements it satisfies.</p>
+    <p class="subtitle">This turns "the AI wrote it" into "we can prove it does what we asked." When compliance asks how you verified the output — you point here.</p>
   </div>
 
   <h2>What traceability produces</h2>
   <table>
     <tr><th>Artifact</th><th>Content</th></tr>
-    <tr><td>code/summary.md (per unit)</td><td>Requirement ID → file, function, line mapping</td></tr>
+    <tr><td>summary.md (per unit)</td><td>Requirement ID → file, function, line mapping</td></tr>
     <tr><td>Module headers (JSDoc)</td><td>List of requirement IDs covered by this file</td></tr>
     <tr><td>Method comments</td><td>Specific [FR-X] [BR-X] tags on each function</td></tr>
     <tr><td>Test describe blocks</td><td>Requirement ID in test group name</td></tr>
@@ -119,7 +121,7 @@ describe('reorderTask [FR-6]', () => { ... });</code></pre>
   <p>Every functional requirement, non-functional requirement, and business rule has at least one code location and at least one test case. No orphan requirements. No undocumented code.</p>
 
   <h2>Full specs</h2>
-  <p>Code summaries: <a href="https://github.com/npozs77/sdd-task-board-demo/tree/main/docs/construction">docs/construction/unit-*/code/summary.md on GitHub →</a></p>
+  <p>Code summaries: <a href="https://github.com/npozs77/sdd-task-board-demo/tree/main/docs/construction">docs/construction/unit-*/summary.md on GitHub →</a></p>
 
   <p style="margin-top:24px;">Next: <a href="audit.html">Audit Trail — decision history →</a></p>
 
